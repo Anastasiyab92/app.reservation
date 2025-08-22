@@ -17,7 +17,9 @@ import com.restaurant.booking.model.Table;
 import com.restaurant.booking.repository.ReservationRepository;
 import com.restaurant.booking.repository.TableRepository;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ReservationService {
     
@@ -34,6 +36,8 @@ public class ReservationService {
     }   
 
     public List<Table> getAvailableTables(LocalDate date, LocalTime time, int numberOfGuests) {
+        log.info("Checking available tables for date: {}, time: {}, guests: {}", date, time, numberOfGuests);
+        
         List<Reservation> reservations = reservationRepository.findByDateAndTime(date, time);
         List<Table> allTables = tableRepository.findAll();
 
@@ -41,18 +45,39 @@ public class ReservationService {
             .map(reservation -> reservation.getTable().getId())
             .collect(Collectors.toSet());
 
-            return allTables.stream()
+        List<Table> availableTables = allTables.stream()
             .filter(table -> !reservedTableIds.contains(table.getId()) && table.getCapacity() >= numberOfGuests)
             .collect(Collectors.toList());
+            
+        log.info("Found {} available tables out of {} total tables", availableTables.size(), allTables.size());
+        return availableTables;
     }
 
     public Reservation createReservation(Reservation reservation) {
+        log.info("Creating reservation for user: {}, table: {}, date: {}, time: {}", 
+            reservation.getUser().getName(), 
+            reservation.getTable().getNumber(),
+            reservation.getDate(),
+            reservation.getTime());
+            
         Reservation savedReservation = reservationRepository.save(reservation);
         ReservationDTO reservationDTO = convertToDTO(savedReservation);
-        crmIntegrationService.sendReservationToCrm(reservationDTO);
-        gastroIntegrationService.sendReservationToGastro(reservationDTO);
-        return savedReservation;
         
+        try {
+            crmIntegrationService.sendReservationToCrm(reservationDTO);
+            gastroIntegrationService.sendReservationToGastro(reservationDTO);
+            log.info("Reservation {} created successfully and sent to external systems", savedReservation.getId());
+        } catch (Exception e) {
+            log.error("Failed to send reservation to external systems: {}", e.getMessage(), e);
+            // Continue with the reservation creation even if external systems fail
+        }
+        
+        return savedReservation;
+    }
+
+    public List<Reservation> getAllReservations() {
+        log.debug("Retrieving all reservations");
+        return reservationRepository.findAll();
     }
 
     private ReservationDTO convertToDTO(Reservation reservation) {
@@ -65,5 +90,4 @@ public class ReservationService {
             LocalDateTime.of(reservation.getDate(), reservation.getTime()),
             reservation.getStatus().toString());
     }
-
 }

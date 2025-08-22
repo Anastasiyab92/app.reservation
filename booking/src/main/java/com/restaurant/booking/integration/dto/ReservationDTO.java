@@ -2,9 +2,13 @@ package com.restaurant.booking.integration.dto;
 
 import java.time.LocalDateTime;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReservationDTO {
 
     private Long reservationId;
@@ -14,16 +18,4 @@ public class ReservationDTO {
     private int tableNumber;
     private LocalDateTime reservationDateTime;
     private String status;
-
-    ReservationDTO(){}
-
-    public ReservationDTO(Long reservationId, String customerName, String customerEmail, String customerPhoneNumber, int tableNumber, LocalDateTime reservationDateTime, String status) {
-        this.reservationId = reservationId;
-        this.customerName = customerName;
-        this.customerEmail = customerEmail;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.tableNumber = tableNumber;
-        this.reservationDateTime = reservationDateTime;
-        this.status = status;
-    }
 }

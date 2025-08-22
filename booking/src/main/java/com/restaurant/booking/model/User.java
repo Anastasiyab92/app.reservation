@@ -22,10 +22,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
-    private String email;   
+    private String email;
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<Reservation> reservations;}
+    private List<Reservation> reservations;
+
+    @Override
+    public String toString() {
+        return "User(id=" + id + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ")";
+    }
+}

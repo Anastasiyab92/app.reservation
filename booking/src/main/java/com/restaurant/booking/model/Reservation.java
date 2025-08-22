@@ -10,6 +10,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,10 +33,22 @@ public class Reservation {
     @ManyToOne
     private Table table;
 
+    @NotNull
     private LocalDate date;
+
+    @NotNull
     private LocalTime time;
+
+    @NotNull
+    @Min(1)
+    @Max(10)
     private int numberOfGuests;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Override
+    public String toString() {
+        return "Reservation(id=" + id + ", date=" + date + ", time=" + time + ", numberOfGuests=" + numberOfGuests + ", status=" + status + ")";
+    }
 }

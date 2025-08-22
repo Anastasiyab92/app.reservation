@@ -22,6 +22,7 @@ public class Table {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int number;
     private int capacity;
 
@@ -29,4 +30,8 @@ public class Table {
     @JsonIgnore
     private List<Reservation> reservations;
 
+    @Override
+    public String toString() {
+        return "Table(id=" + id + ", number=" + number + ", capacity=" + capacity + ")";
+    }
 }
