@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Environment and Local Configuration ###
+application-local.properties
+.env
+*.env
+.env.local
+.env.development
+.env.production
+
+### macOS ###
+.DS_Store
