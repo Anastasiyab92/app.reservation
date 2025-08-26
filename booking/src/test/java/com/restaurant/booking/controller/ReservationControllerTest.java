@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
-import com.restaurant.booking.integration.dto.ReservationDTO;
+import com.restaurant.booking.dto.ReservationDTO;
 import com.restaurant.booking.model.Reservation;
 import com.restaurant.booking.model.Status;
 import com.restaurant.booking.model.Table;
@@ -72,7 +72,7 @@ class ReservationControllerTest {
 
     @Test
     void testAvailableTablesEndpoint() {
-        String url = "/api/reservations/available?date=2025-08-15&time=12:00&numberOfGuests=4";
+        String url = "/api/reservations/available?date=2025-08-25&time=12:00&numberOfGuests=4";
         ResponseEntity<Table[]> response = restTemplate.getForEntity(url, Table[].class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());

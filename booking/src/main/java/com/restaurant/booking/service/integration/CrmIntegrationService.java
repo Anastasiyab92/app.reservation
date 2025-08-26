@@ -1,6 +1,6 @@
-package com.restaurant.booking.integration;
+package com.restaurant.booking.service.integration;
 
-import com.restaurant.booking.integration.dto.ReservationDTO;
+import com.restaurant.booking.dto.ReservationDTO;
 
 public interface CrmIntegrationService {
 

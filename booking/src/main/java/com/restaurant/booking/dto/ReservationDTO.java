@@ -1,4 +1,4 @@
-package com.restaurant.booking.integration.dto;
+package com.restaurant.booking.dto;
 
 import java.time.LocalDateTime;
 

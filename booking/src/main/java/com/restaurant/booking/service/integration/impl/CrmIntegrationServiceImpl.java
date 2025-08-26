@@ -1,11 +1,11 @@
-package com.restaurant.booking.service.integration;
+package com.restaurant.booking.service.integration.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.restaurant.booking.integration.CrmIntegrationService;
-import com.restaurant.booking.integration.dto.ReservationDTO;
+import com.restaurant.booking.dto.ReservationDTO;
+import com.restaurant.booking.service.integration.CrmIntegrationService;
 
 @Service
 public class CrmIntegrationServiceImpl implements CrmIntegrationService {

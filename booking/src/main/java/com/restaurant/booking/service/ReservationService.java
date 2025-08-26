@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.restaurant.booking.integration.CrmIntegrationService;
-import com.restaurant.booking.integration.GastroIntegrationService;
-import com.restaurant.booking.integration.dto.ReservationDTO;
+import com.restaurant.booking.dto.ReservationDTO;
 import com.restaurant.booking.model.Reservation;
 import com.restaurant.booking.model.Table;
 import com.restaurant.booking.repository.ReservationRepository;
 import com.restaurant.booking.repository.TableRepository;
+import com.restaurant.booking.service.integration.CrmIntegrationService;
+import com.restaurant.booking.service.integration.GastroIntegrationService;
 
 import lombok.extern.slf4j.Slf4j;
 

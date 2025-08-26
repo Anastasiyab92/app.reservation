@@ -20,15 +20,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.restaurant.booking.integration.CrmIntegrationService;
-import com.restaurant.booking.integration.GastroIntegrationService;
-import com.restaurant.booking.integration.dto.ReservationDTO;
+import com.restaurant.booking.dto.ReservationDTO;
 import com.restaurant.booking.model.Reservation;
 import com.restaurant.booking.model.Status;
 import com.restaurant.booking.model.Table;
 import com.restaurant.booking.model.User;
 import com.restaurant.booking.repository.ReservationRepository;
 import com.restaurant.booking.repository.TableRepository;
+import com.restaurant.booking.service.integration.CrmIntegrationService;
+import com.restaurant.booking.service.integration.GastroIntegrationService;
 
 @ExtendWith(MockitoExtension.class)
 public class ReservationServiceTest {
