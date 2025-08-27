@@ -22,6 +22,7 @@ public class SwaggerSecurityConfig {
         http
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").authenticated()
+                .requestMatchers("/api/**").permitAll()  // Allow all API endpoints
                 .anyRequest().permitAll()
             )
             .httpBasic(Customizer.withDefaults());
