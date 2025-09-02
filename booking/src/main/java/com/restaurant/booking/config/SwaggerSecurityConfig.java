@@ -21,10 +21,11 @@ public class SwaggerSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").authenticated()
-                .requestMatchers("/api/**").permitAll()  // Allow all API endpoints
+                .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .requestMatchers("/api/**").permitAll()
                 .anyRequest().permitAll()
             )
+            .csrf(csrf -> csrf.disable())
             .httpBasic(Customizer.withDefaults());
         
         return http.build();
