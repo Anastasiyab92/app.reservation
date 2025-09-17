@@ -69,7 +69,7 @@ export DB_PASSWORD=your_secure_password
 
 ### Get Available Tables
 ```http
-GET /api/reservations/available?date=2025-08-25&time=12:00&numberOfGuests=4
+GET /api/reservations/available?date=2025-09-25&time=12:00&numberOfGuests=4
 ```
 
 ### Create Reservation
@@ -89,7 +89,7 @@ Content-Type: application/json
     "number": 1,
     "capacity": 4
   },
-  "date": "2025-08-15",
+  "date": "2025-09-25",
   "time": "12:00",
   "numberOfGuests": 4,
   "status": "BOOKED"

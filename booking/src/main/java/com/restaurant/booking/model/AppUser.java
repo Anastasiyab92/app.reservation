@@ -1,25 +1,22 @@
 package com.restaurant.booking.model;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "users")
+@Entity(name = "app_users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,16 +28,12 @@ public class User {
     @Email
     @NotBlank
     private String email;
-    private String phoneNumber;
 
-    // Domain-only user: no authentication fields
+    @NotBlank
+    private String password;
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Reservation> reservations;
-
-    @Override
-    public String toString() {
-        return "User(id=" + id + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ")";
-    }
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ADMIN;
 }
+
+
