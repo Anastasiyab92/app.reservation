@@ -74,8 +74,8 @@ public class TableService {
         if (table.getCapacity() <= 0) {
             throw new IllegalArgumentException("Table capacity must be positive");
         }
-        if (table.getCapacity() > 20) {
-            throw new IllegalArgumentException("Table capacity cannot exceed 20");
+        if (table.getCapacity() > 10) {
+            throw new IllegalArgumentException("Table capacity cannot exceed 10");
         }
     }
 }

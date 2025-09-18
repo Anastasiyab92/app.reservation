@@ -19,9 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.restaurant.booking.model.Reservation;
-import com.restaurant.booking.model.Status;
-import com.restaurant.booking.model.Table;
-import com.restaurant.booking.model.User;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ReservationControllerValidationTest {

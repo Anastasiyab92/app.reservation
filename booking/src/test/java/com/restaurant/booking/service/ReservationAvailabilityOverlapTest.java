@@ -6,8 +6,6 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.restaurant.booking.model.Reservation;
 import com.restaurant.booking.model.Table;
-import com.restaurant.booking.model.User;
 import com.restaurant.booking.repository.ReservationRepository;
 import com.restaurant.booking.repository.TableRepository;
 import com.restaurant.booking.service.integration.CrmIntegrationService;
