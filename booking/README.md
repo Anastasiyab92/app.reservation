@@ -19,6 +19,7 @@ A Spring Boot application for managing restaurant table reservations with integr
 - **Spring Data JPA**
 - **MySQL Database** (Production)
 - **H2 Database** (Testing)
+- **Flyway** (Database Migrations)
 - **Maven**
 - **Lombok**
 - **OpenAPI/Swagger**
@@ -38,6 +39,8 @@ Create MySQL database:
 ```sql
 CREATE DATABASE restaurant_db;
 ```
+
+The application uses Flyway for database migrations. The initial schema will be created automatically on first startup.
 
 ### 2. Environment Variables
 
@@ -127,6 +130,60 @@ GET /api/reservations
 - Warning level logging
 - H2 console disabled
 - Minimal error details
+
+### Profiles and Security Behavior
+
+- dev/local (non-prod): A permissive security chain (`SwaggerSecurityConfig`) is active. All `/api/**` endpoints are permitted to simplify development and testing, and Swagger is enabled. An in-memory user is available for basic auth testing, but JWT is not required.
+- prod: Strict security (`SecurityConfig`) is active. JWT auth is required for `/api/**`. Only `/auth/register`, `/auth/login`, and Swagger endpoints are publicly accessible (Swagger is typically disabled in prod via properties).
+- tests (non-prod): An `AuthenticationManager` is provided by `TestProfileSecurityConfig` that marks authentications as authenticated to avoid complex wiring in unit tests.
+
+Run with a specific profile:
+
+```bash
+# Development (non-prod security, Swagger enabled)
+./mvnw spring-boot:run -Dspring.profiles.active=dev
+
+# Local (non-prod security, Swagger enabled; uses local DB config if provided)
+./mvnw spring-boot:run -Dspring.profiles.active=local
+
+# Production (JWT-protected /api/**)
+./mvnw spring-boot:run -Dspring.profiles.active=prod
+```
+
+JWT configuration (prod):
+
+- `security.jwt.secret` (Base64) and `security.jwt.expiration-ms` can be set via environment variables or properties. Defaults are provided for non-prod.
+
+### Example auth flow (prod)
+
+```bash
+# 1) Register a user (optional if already registered)
+curl -X POST http://localhost:8080/auth/register \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "pass1234"
+  }'
+
+# 2) Login to obtain JWT token
+TOKEN=$(curl -s -X POST http://localhost:8080/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "john@example.com",
+    "password": "pass1234"
+  }' | jq -r .token)
+
+echo "Token: $TOKEN"
+
+# 3) Call a protected endpoint using the token
+curl -X GET http://localhost:8080/api/users/1 \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+Notes:
+- The login response body is `{ "token": "<JWT>" }`.
+- Replace `/api/users/1` with any protected `/api/**` endpoint you wish to test.
 
 ## Security Notes
 
