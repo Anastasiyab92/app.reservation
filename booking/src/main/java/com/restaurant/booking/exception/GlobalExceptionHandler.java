@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -59,6 +60,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+            ex.getMessage(),
+            HttpStatus.BAD_REQUEST.value(),
+            LocalDateTime.now(),
+            null
+        );
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
         ErrorResponse errorResponse = new ErrorResponse(
@@ -69,5 +81,27 @@ public class GlobalExceptionHandler {
         );
         
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+            "Invalid parameter: " + ex.getName(),
+            HttpStatus.BAD_REQUEST.value(),
+            LocalDateTime.now(),
+            null
+        );
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+            ex.getMessage(),
+            HttpStatus.NOT_FOUND.value(),
+            LocalDateTime.now(),
+            null
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 }

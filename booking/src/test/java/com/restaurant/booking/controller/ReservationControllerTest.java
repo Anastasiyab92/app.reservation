@@ -72,7 +72,7 @@ class ReservationControllerTest {
 
     @Test
     void testAvailableTablesEndpoint() {
-        String url = "/api/reservations/available?date=2025-08-25&time=12:00&numberOfGuests=4";
+        String url = "/api/reservations/available?date=2025-12-25&time=12:00&numberOfGuests=4";
         ResponseEntity<Table[]> response = restTemplate.getForEntity(url, Table[].class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -89,7 +89,7 @@ class ReservationControllerTest {
         Reservation reservation = new Reservation();
         reservation.setUser(user);
         reservation.setTable(table);
-        reservation.setDate(LocalDate.of(2025, 8, 15));
+        reservation.setDate(LocalDate.of(2025, 12, 15));
         reservation.setTime(LocalTime.of(12, 0));
         reservation.setNumberOfGuests(4);
         reservation.setStatus(Status.BOOKED);

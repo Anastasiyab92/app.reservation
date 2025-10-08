@@ -18,6 +18,7 @@ import com.restaurant.booking.model.Reservation;
 import com.restaurant.booking.model.Table;
 import com.restaurant.booking.service.ReservationService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,6 +36,7 @@ import jakarta.validation.constraints.NotNull;
 @RestController
 @RequestMapping("/api/reservations")
 @Tag(name = "Reservation Management", description = "APIs for managing restaurant reservations")
+@Validated
 public class ReservationController {
 
     private final ReservationService reservationService;

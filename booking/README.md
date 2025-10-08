@@ -89,7 +89,7 @@ Content-Type: application/json
     "number": 1,
     "capacity": 4
   },
-  "date": "2025-09-25",
+  "date": "2025-12-25",
   "time": "12:00",
   "numberOfGuests": 4,
   "status": "BOOKED"

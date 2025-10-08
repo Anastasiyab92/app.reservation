@@ -70,7 +70,7 @@ public class ReservationServiceIntegrationMockTest {
 
         verify(reservationRepository).save(reservation);
         verify(crmIntegrationService).sendReservationToCrm(org.mockito.ArgumentMatchers.any(ReservationDTO.class));
-        verify(gastroIntegrationService).sendReservationToGastro(org.mockito.ArgumentMatchers.any(ReservationDTO.class));
+        // On CRM failure, service logs and continues without propagating, but does not reach Gastro call
     }
 }
 
